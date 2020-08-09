@@ -20,16 +20,15 @@ from sklearn.cluster import KMeans
 from geopy import distance
 from collections import namedtuple
 from geopy.geocoders import Nominatim
-import nltk
 
 
 @login_required
 def home(request):
     # Connections
-    query_clg = str(College.objects.all().query)
-    query_int = str(Internship.objects.all().query)
-    df_clg = pd.read_sql_query(query_clg, connection)
-    df_int = pd.read_sql_query(query_int, connection)
+    query_clg = list(College.objects.values('Course_year', 'Student_id'))
+    query_int = list(Internship.objects.values('Year', 'Company_Name', 'Pay_Details'))
+    df_clg = pd.DataFrame(query_clg)
+    df_int = pd.DataFrame(query_int)
 
     # College Table--> Enrollment
     current_enrolment = df_clg['Course_year'].loc[(df_clg['Course_year'] == '2017/2018')].count()
@@ -69,7 +68,7 @@ def charts(request):
 @login_required
 def tables_std(request):
     context = {
-        'posts': Student.objects.all(),
+        'posts': Student.objects.values(),
         'title': 'Tables_student'
     }
     return render(request, 'dash/table.html',context)
@@ -78,7 +77,7 @@ def tables_std(request):
 @login_required
 def tables_clg(request):
     context = {
-        'posts': College.objects.all(),
+        'posts': College.objects.values(),
         'title': 'Tables_college'
     }
     return render(request, 'dash/tables_clg.html',context)
@@ -87,7 +86,7 @@ def tables_clg(request):
 @login_required
 def tables_intern(request):
     context = {
-        'posts': Internship.objects.all(),
+        'posts': Internship.objects.values(),
         'title': 'Tables_Inernship'
     }
     return render(request, 'dash/tables_intern.html',context)
@@ -343,17 +342,17 @@ class ChartData(APIView):
 
         # *****************************LOADING DATA FROM MODELS*************************************
 
-        student_table = str(Student.objects.all().query)
-        student_df = pd.read_sql_query(student_table, connection)
+        student_table = Student.objects.values()
+        student_df = pd.DataFrame(list(student_table))
 
-        college_table = str(College.objects.all().query)
-        college_df = pd.read_sql_query(college_table, connection)
+        college_table = College.objects.values()
+        college_df = pd.DataFrame(list(college_table))
 
-        internship_table = str(Internship.objects.all().query)
-        internship_df = pd.read_sql_query(internship_table, connection)
+        internship_table = Internship.objects.values()
+        internship_df = pd.DataFrame(list(internship_table))
 
-        country_table = str(Country.objects.all().query)
-        country_df = pd.read_sql_query(country_table, connection)
+        country_table = Country.objects.values()
+        country_df = pd.DataFrame(list(country_table))
 
         # *****************************END DATA FROM MODELS END *************************************
 
@@ -1014,8 +1013,8 @@ class ChartFilterData(APIView):
 
         # *****************************LOADING DATA FROM MODELS*************************************
 
-        internship_table = str(Internship.objects.all().query)
-        internship_df = pd.read_sql_query(internship_table, connection)
+        internship_table = Internship.objects.values()
+        internship_df = pd.DataFrame(list(internship_table))
 
         # *****************************END DATA FROM MODELS END *************************************
 

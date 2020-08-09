@@ -77,8 +77,29 @@ WSGI_APPLICATION = 'GeoStatEisti.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 # This is for IMPORT EXPORT
+
 IMPORT_EXPORT_USE_TRANSACTIONS = False
+"""
 DATABASES = {
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'EISTI',
+        'HOST': 'localhost',
+        'PORT': '27017',
+        'ENFORCE_SCHEMA': True,
+        'AUTH_MECHANISM': 'SCRAM-SHA-1',
+    }
+}
+"""
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.environ.get('DB_NAME'),
@@ -87,7 +108,7 @@ DATABASES = {
         'HOST': 'localhost' ,
         'PORT': '3306' ,
     }
-}
+}"""
 
 
 # Password validation
@@ -131,7 +152,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-
 
 
 # This is for saving media files like images / profile pictures
