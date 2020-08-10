@@ -128,3 +128,6 @@ dmypy.json
 
 # Database
 db.sqlite3
+
+# geo stat final report
+Final_Report.docx
