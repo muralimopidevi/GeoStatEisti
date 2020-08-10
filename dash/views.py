@@ -12,6 +12,7 @@ from pivottablejs import pivot_ui
 from .models import *
 from django.db import connection
 from django.contrib import messages
+from django.views.decorators.clickjacking import xframe_options_exempt
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
@@ -23,6 +24,7 @@ from geopy.geocoders import Nominatim
 
 
 @login_required
+@xframe_options_exempt
 def home(request):
     # Connections
     query_clg = list(College.objects.values('Course_year', 'Student_id'))
@@ -61,11 +63,13 @@ def home(request):
 
 
 @login_required
+@xframe_options_exempt
 def charts(request):
     return render(request, 'dash/graph.html', {'title': 'Charts'})
 
 
 @login_required
+@xframe_options_exempt
 def tables_std(request):
     context = {
         'posts': Student.objects.values(),
@@ -75,6 +79,7 @@ def tables_std(request):
 
 
 @login_required
+@xframe_options_exempt
 def tables_clg(request):
     context = {
         'posts': College.objects.values(),
@@ -84,6 +89,7 @@ def tables_clg(request):
 
 
 @login_required
+@xframe_options_exempt
 def tables_intern(request):
     context = {
         'posts': Internship.objects.values(),
@@ -95,119 +101,142 @@ def tables_intern(request):
 # ***************************** FOR MAPS *************************************
 
 @login_required
+@xframe_options_exempt
 def maps(request):
     return render(request, 'dash/maps.html', {'title': 'Maps'})
 
 
 @login_required
+@xframe_options_exempt
 def map_store(request):
     return render(request, 'map/map_store_home.html', {'title': 'Map-store'})
 
 
 @login_required
+@xframe_options_exempt
 def map_store_route(request):
     return render(request, 'map/map_store_route.html', {'title': 'Map-store'})
 
 
 @login_required
+@xframe_options_exempt
 def map_store_route1(request):
     return render(request, 'map/map_store_route1.html', {'title': 'Map-store1'})
 
 
 @login_required
+@xframe_options_exempt
 def map_store_route2(request):
     return render(request, 'map/map_store_route2.html', {'title': 'Map-store2'})
 
 
 @login_required
+@xframe_options_exempt
 def map_store_kmeans_student_city(request):
     return render(request, 'map/map_store_kmeans_student_city.html', {'title': 'Map-store'})
 
 
 @login_required
+@xframe_options_exempt
 def map_store_companies(request):
     return render(request, 'map/map_store_companies.html', {'title': 'Map-store'})
 
 
 # ***************************** END FOR MAPS *************************************
 @login_required
+@xframe_options_exempt
 def map_store(request):
     return render(request, 'map/map_store_home.html', {'title': 'Map-store'})
 
 
 @login_required
+@xframe_options_exempt
 def graph(request):
 
     return render(request, 'chart-script/dash-filter.html', {'title': 'graph'})
 
 
 @login_required
+@xframe_options_exempt
 def graph_cergy(request):
 
     return render(request, 'chart-script/dash-filter-cergy.html', {'title': 'graph'})
 
 
 @login_required
+@xframe_options_exempt
 def piv_std(request):
     return render(request, 'piv/piv_std.html', {'title': 'Piv_std'})
 
 
 @login_required
+@xframe_options_exempt
 def piv_clg(request):
     return render(request, 'piv/piv_clg.html', {'title': 'Piv_clg'})
 
 
 @login_required
+@xframe_options_exempt
 def piv_intern(request):
     return render(request, 'piv/piv_intern.html', {'title': 'Piv_intern'})
 
 
 @login_required
+@xframe_options_exempt
 def visual_std(request):
     return render(request, 'dash/visu_std.html', {'title': 'Visual_std'})
 
 
 @login_required
+@xframe_options_exempt
 def visual_clg(request):
     return render(request, 'dash/visu_clg.html', {'title': 'Visual_clg'})
 
 
 @login_required
+@xframe_options_exempt
 def visual_intern(request):
     return render(request, 'dash/visu_intern.html', {'title': 'Visual_intern'})
 
 
 @login_required
+@xframe_options_exempt
 def regression(request):
     return render(request, 'dash/regression.html', {'title': 'Regression'})
 
 # *****************************PAU Cergy REGRESSION MODEL FOR AVERAGE RENUMERATION *************************************
 @login_required
+@xframe_options_exempt
 def reg_pau(request):
     return render(request, 'chart-script/dash-filter-reg-pau.html', {'title': 'reg-pau'})
 
 
 @login_required
+@xframe_options_exempt
 def reg_cergy(request):
     return render(request, 'chart-script/dash-filter-reg-cergy.html', {'title': 'reg-cergy'})
 
 # *****************************PAU Cergy REGRESSION MODEL FOR AVERAGE Enrollment *************************************
 @login_required
+@xframe_options_exempt
 def reg_pau_enrollment(request):
     return render(request, 'chart-script/dash-filter-reg-enrolment-pau.html', {'title': 'reg-pau'})
 
 
 @login_required
+@xframe_options_exempt
 def reg_cergy_enrollment(request):
     return render(request, 'chart-script/dash-filter-reg-enrolment-cergy.html', {'title': 'reg-cergy'})
 
 # *****************************TOP 10 RECRUITERS *************************************
 @login_required
+@xframe_options_exempt
 def recruiters(request):
     return render(request, 'chart-script/dash-filter-top-recruiters.html', {'title': 'reg-recruiters'})
 
 
 @login_required
+@xframe_options_exempt
 def contact(request):
     form_class = ContactForm
     if request.method == 'POST':
@@ -230,9 +259,9 @@ def contact(request):
                 headers = {'Reply-To': Email}
             )
             email.send()
-            messages.success( request , f'Message Send Successfully..!' )
+            messages.success( request , f'Message Send Successfully..!')
             return redirect('dash-contact')
-    return render(request, 'dash/contact.html', {'form': form_class}, {'title': 'Contact'})
+    return render(request, 'dash/contact.html', {'form': form_class})
 
 
 @login_required
