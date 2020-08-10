@@ -255,7 +255,7 @@ def contact(request):
             content = template.render(context)
             email= EmailMessage(
                 "New Contact Form Submission", content,
-                "YOUR Website" +'',['muralikrishnamopidevi1@gmail.com'],
+                "YOUR Website" +'',['youemail@gmail.com'],
                 headers = {'Reply-To': Email}
             )
             email.send()
