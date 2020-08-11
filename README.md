@@ -59,10 +59,23 @@ STEP-4
 
 STEP-5
 
-## To use Forget password 
-Add the following Environmental Varibales in your windows.
-EMAIL_USER -> <user@gg.com>
-EMAIL_PASS -> <your email pass>
+# For forget password we need to add email and password at
+# MovieRating/MovieRating/settings.py file
+# end of the settings you need to change these 2 lines like this
+
+    EMAIL_HOST_USER = 'youremailid@gmgg.com'
+    EMAIL_HOST_PASSWORD = 'yourpassword'
+
+# Instead of these below lines
+
+    EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+
+# If you want to use above format Add the following Environmental Varibales in your windows.
+    EMAIL_USER -> <user@gg.com>
+    EMAIL_PASS -> <your email pass>
+
+
 ```
 
 Hint:   change your database connetion to sqlite3 to any other

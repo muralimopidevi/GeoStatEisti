@@ -10,7 +10,6 @@ from rest_framework.response import Response
 import folium
 from pivottablejs import pivot_ui
 from .models import *
-from django.db import connection
 from django.contrib import messages
 from django.views.decorators.clickjacking import xframe_options_exempt
 import pandas as pd
